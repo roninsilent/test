@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web con Login y Firebase</title>
+    <style>
+        /* Estilos para el mensaje */
+        #message {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            color: #333;
+            display: none;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>Bienvenido a nuestra web</h1>
@@ -20,17 +37,8 @@
         <button type="submit">Iniciar sesión</button>
     </form>
 
-    <!-- Formulario de registro -->
-    <h2>Registrarse</h2>
-    <form id="signup-form">
-        <label for="signup-email">Correo electrónico:</label>
-        <input type="email" id="signup-email" name="signup-email" required>
-
-        <label for="signup-password">Contraseña:</label>
-        <input type="password" id="signup-password" name="signup-password" required>
-
-        <button type="submit">Registrarse</button>
-    </form>
+    <!-- Elemento para mostrar mensajes -->
+    <div id="message"></div>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
@@ -38,21 +46,21 @@
     <script>
         // Configura tu proyecto de Firebase con tu propia configuración
         const firebaseConfig = {
-              apiKey: "AIzaSyCkt4X2z93XeQB5_Yr2ZEPDx0ej4WnpHbc",
-              authDomain: "remunerats.firebaseapp.com",
-              projectId: "remunerats",
-              storageBucket: "remunerats.appspot.com",
-              messagingSenderId: "210093843883",
-              appId: "1:210093843883:web:ce937c75f066831c065eee",
-              measurementId: "G-RQYRN6G16K"
+            apiKey: "AIzaSyCkt4X2z93XeQB5_Yr2ZEPDx0ej4WnpHbc",
+            authDomain: "remunerats.firebaseapp.com",
+            projectId: "remunerats",
+            storageBucket: "remunerats.appspot.com",
+            messagingSenderId: "210093843883",
+            appId: "1:210093843883:web:ce937c75f066831c065eee",
+            measurementId: "G-RQYRN6G16K"
         };
 
         // Inicializa Firebase
         firebase.initializeApp(firebaseConfig);
 
-        // Obtén referencias a los formularios
+        // Obtén referencias a los formularios y el elemento de mensaje
         const loginForm = document.getElementById('login-form');
-        const signupForm = document.getElementById('signup-form');
+        const messageDiv = document.getElementById('message');
 
         // Evento para el formulario de inicio de sesión
         loginForm.addEventListener('submit', (event) => {
@@ -64,29 +72,19 @@
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     // Aquí puedes redirigir al usuario a una página de bienvenida o su panel de control
-                    console.log('Inicio de sesión exitoso:', userCredential.user);
+                    showMessage('Inicio de sesión exitoso', 'success');
                 })
                 .catch((error) => {
-                    console.error('Error de inicio de sesión:', error);
+                    showMessage('Error de inicio de sesión: ' + error.message, 'error');
                 });
         });
 
-        // Evento para el formulario de registro
-        signupForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const email = signupForm['signup-email'].value;
-            const password = signupForm['signup-password'].value;
-
-            // Registrar un nuevo usuario con Firebase Authentication
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Aquí puedes redirigir al usuario a una página de bienvenida o su panel de control
-                    console.log('Registro exitoso:', userCredential.user);
-                })
-                .catch((error) => {
-                    console.error('Error de registro:', error);
-                });
-        });
+        // Función para mostrar mensajes
+        function showMessage(message, type) {
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = message;
+            messageDiv.className = type;
+        }
     </script>
 </body>
 </html>
