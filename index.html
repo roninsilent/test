@@ -4,23 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web con Login y Firebase</title>
-    <style>
-        /* Estilos para el mensaje */
-        #message {
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            color: #333;
-            display: none;
-        }
-        .success {
-            color: green;
-        }
-        .error {
-            color: red;
-        }
-    </style>
 </head>
 <body>
     <h1>Bienvenido a nuestra web</h1>
@@ -46,13 +29,10 @@
     <script>
         // Configura tu proyecto de Firebase con tu propia configuración
         const firebaseConfig = {
-            apiKey: "AIzaSyCkt4X2z93XeQB5_Yr2ZEPDx0ej4WnpHbc",
-            authDomain: "remunerats.firebaseapp.com",
-            projectId: "remunerats",
-            storageBucket: "remunerats.appspot.com",
-            messagingSenderId: "210093843883",
-            appId: "1:210093843883:web:ce937c75f066831c065eee",
-            measurementId: "G-RQYRN6G16K"
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_DOMINIO_FIREBASE",
+            projectId: "TU_ID_PROYECTO",
+            // ... otras configuraciones de Firebase
         };
 
         // Inicializa Firebase
@@ -61,6 +41,27 @@
         // Obtén referencias a los formularios y el elemento de mensaje
         const loginForm = document.getElementById('login-form');
         const messageDiv = document.getElementById('message');
+
+        // Estilos en línea (inline) en JavaScript
+        const styles = {
+            message: {
+                marginTop: '10px',
+                padding: '10px',
+                border: '1px solid #ccc',
+                backgroundColor: '#f9f9f9',
+                color: '#333',
+                display: 'none',
+            },
+            success: {
+                color: 'green',
+            },
+            error: {
+                color: 'red',
+            },
+        };
+
+        // Asignar los estilos a los elementos
+        Object.assign(messageDiv.style, styles.message);
 
         // Evento para el formulario de inicio de sesión
         loginForm.addEventListener('submit', (event) => {
@@ -83,8 +84,9 @@
         function showMessage(message, type) {
             messageDiv.style.display = 'block';
             messageDiv.textContent = message;
-            messageDiv.className = type;
+            messageDiv.style.color = styles[type].color;
         }
     </script>
 </body>
 </html>
+
